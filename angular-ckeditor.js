@@ -52,6 +52,29 @@
             controller.instance.setReadOnly(!! readonly);
           });
 
+          function setShowToolbar(showToolbar){
+            showToolbar = (showToolbar == "true" ? true : false);
+            var shouldFocus = attrs.focusOnToolbarToggle == "true";
+            var hideClass = "cke_hide_toolbar";
+            var elementId = "cke_" + controller.instance.name;
+            var element = angular.element('#' + elementId);
+
+            if(showToolbar)
+              element.removeClass(hideClass);
+            else 
+              element.addClass(hideClass);
+
+            if(shouldFocus)
+              controller.instance.focus();
+          };
+
+          if(attrs.hasOwnProperty('showToolbar'))
+            setShowToolbar(attrs.showToolbar);
+
+          attrs.$observe('showToolbar', function(showToolbar){
+            setShowToolbar(showToolbar);
+          });
+
           // Defer the ready handler calling to ensure that the editor is
           // completely ready and populated with data.
           setImmediate(function () {
